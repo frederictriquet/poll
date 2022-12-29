@@ -1,9 +1,9 @@
-import { getRandom } from '$lib/services/db';
-import { json } from '@sveltejs/kit';
-import type { RequestHandler } from '../../$types';
+import { getData, putData } from '$lib/supabaseClient';
+import { json, type RequestHandler } from '@sveltejs/kit';
 
 export const GET: RequestHandler = async () => {
-    const result = await getRandom();
+    // await putData();
+    const result = await getData();
     console.log(`new result ${result}`);
-    return json({ rand: result });
+    return json({ data: result });
 };
