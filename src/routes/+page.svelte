@@ -1,2 +1,2 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<h1>Qui est l'assassin ?</h1>
+<h1>Dans quelle pièce le crime a-t-il été commis ?</h1>
