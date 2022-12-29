@@ -1,9 +1,9 @@
-import { Database } from 'sqlite3';
+import { PromisedDatabase } from 'promised-sqlite3';
 
-const db = new Database('db.sqlite');
+const db = new PromisedDatabase();
 
-export function getRandom() {
-  console.log('before');
-	db.get('SELECT RANDOM() % 100 as result', (_, res) => console.log(res));
-  return { result: 'OK' };
+export async function getRandom() {
+  await db.open("./db.sqlite");
+	const result = await db.get('SELECT RANDOM() % 100 as rand');
+  return result.rand;
 }

@@ -32,6 +32,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"sqlite3": "^5.1.4"
+		"promised-sqlite3": "^1.2.0"
 	}
 }
