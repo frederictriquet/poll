@@ -5,7 +5,7 @@
 	let selectedRoom;
 </script>
 
-<h1 class="text-center">Qui est l'assassin ? {selectedSuspect}</h1>
+<h1 class="text-center">Qui est l'assassin ?</h1>
 
 <ul class="grid gap-6 w-full md:grid-cols-2">
 	{#each data.suspects as suspect}
@@ -27,7 +27,7 @@
 </ul>
 
 <h1 class="text-center mt-10">
-	Dans quelle pièce le crime a-t-il été commis ? {selectedRoom}
+	Dans quelle pièce le crime a-t-il été commis ?
 </h1>
 
 <ul class="grid gap-6 w-full md:grid-cols-2">
@@ -54,6 +54,6 @@
 <form method="POST" action="?/vote">
 	<input type="hidden" name="selectedSuspect" value={selectedSuspect} />
 	<input type="hidden" name="selectedRoom" value={selectedRoom} />
-	<button class="nicebutton" disabled={!selectedSuspect || !selectedRoom} type="submit">Voter</button>
+	<button class="nicebutton text-center" disabled={!selectedSuspect || !selectedRoom} type="submit"><div class="w-full">Voter</div></button>
 </form>
 

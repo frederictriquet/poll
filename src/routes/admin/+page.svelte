@@ -5,7 +5,7 @@
 
 <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
 	<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-		<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+		<thead class="text-xs text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
 			<tr>
 				<th class="py-3 px-6">Nom</th>
 				<th>Votes</th>
@@ -48,7 +48,7 @@
 
 <div class="overflow-x-auto relative shadow-md sm:rounded-lg mt-10">
 	<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-		<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+		<thead class="text-xs text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
 			<tr>
 				<th class="py-3 px-6">Nom</th>
 				<th>Votes</th>

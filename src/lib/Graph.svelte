@@ -2,21 +2,22 @@
 	import { scaleLinear } from 'd3-scale';
 	export let width;
 	export let height;
-  export let points;
+	export let points;
 
 	const padding = { top: 20, right: 15, bottom: 20, left: 25 };
 
-  const range = (start, end, step=1) => Array.from(Array(Math.ceil((end - start)/step) + 1).keys()).map(x => step*x + start);
+	const range = (start, end, step = 1) =>
+		Array.from(Array(Math.ceil((end - start) / step) + 1).keys()).map((x) => step * x + start);
 
-  function computeTicks(points) {
-    const maxValue = Math.max(...points.map((e)=> e.votes));
-    if (maxValue<5) return range(0, 5);
-    if (maxValue<10) return range(0, 10, 5);
-    if (maxValue<40) return range(0, maxValue, 5);
-    return range(0, maxValue, 10);
-  }
+	function computeTicks(points) {
+		const maxValue = Math.max(...points.map((e) => e.votes));
+		if (maxValue < 5) return range(0, 5);
+		if (maxValue < 10) return range(0, 10, 5);
+		if (maxValue < 40) return range(0, maxValue, 5);
+		return range(0, maxValue, 10);
+	}
 
-  $: yTicks = computeTicks(points);
+	$: yTicks = computeTicks(points);
 
 	$: xScale = scaleLinear()
 		.domain([0, points.length])
@@ -63,9 +64,6 @@
 	</svg>
 </div>
 
-
-
-
 <style>
 	.chart {
 		width: 100%;
@@ -81,7 +79,7 @@
 
 	.tick {
 		font-family: Helvetica, Arial;
-		font-size: .725em;
+		font-size: 0.725em;
 		font-weight: 200;
 	}
 
