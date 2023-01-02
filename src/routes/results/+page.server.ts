@@ -14,7 +14,7 @@ export const actions = {
 		const data = await request.formData();
 		const suspectId = data.get('selectedSuspect');
 		const roomId = data.get('selectedRoom');
-		console.log([suspectId, roomId]);
+		// console.log([suspectId, roomId]);
 		await voteForSuspect(suspectId);
 		await voteForRoom(roomId);
 		throw redirect(303, '/results');
