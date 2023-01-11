@@ -4,7 +4,9 @@ import {
 	deleteRoom,
 	deleteSuspect,
 	getRooms,
-	getSuspects
+	getSuspects,
+	resetVotesForRooms,
+	resetVotesForSuspects
 } from '$lib/supabaseClient';
 import type { PageServerLoad } from './$types';
 
@@ -28,6 +30,10 @@ export const actions = {
 		await createSuspect(name);
 		return { success: true };
 	},
+	restVotesForSuspects: async () => {
+		await resetVotesForSuspects();
+		return { success: true };
+	},
 	deleteRoom: async ({ request }) => {
 		const data = await request.formData();
 		const id = data.get('id');
@@ -38,6 +44,10 @@ export const actions = {
 		const data = await request.formData();
 		const name = data.get('name');
 		await createRoom(name);
+		return { success: true };
+	},
+	restVotesForRooms: async () => {
+		await resetVotesForRooms();
 		return { success: true };
 	}
 };

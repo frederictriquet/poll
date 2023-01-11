@@ -17,7 +17,7 @@
 				bind:group={selectedSuspect}
 				value={suspect.id}
 			/>
-			<label for="suspect{suspect.id}" class="nicebutton">
+			<label for="suspect{suspect.id}" class="nicebutton w-full">
 				<div class="w-full text-lg font-semibold text-center">
 					{suspect.name}
 				</div>
@@ -40,7 +40,7 @@
 				bind:group={selectedRoom}
 				value={room.id}
 			/>
-			<label for="room{room.id}" class="nicebutton">
+			<label for="room{room.id}" class="nicebutton w-full">
 				<div class="w-full text-lg font-semibold text-center">
 					{room.name}
 				</div>
@@ -54,6 +54,6 @@
 <form method="POST" action="?/vote">
 	<input type="hidden" name="selectedSuspect" value={selectedSuspect} />
 	<input type="hidden" name="selectedRoom" value={selectedRoom} />
-	<button class="nicebutton text-center" disabled={!selectedSuspect || !selectedRoom} type="submit"><div class="w-full">Voter</div></button>
+	<button class="nicebutton w-full text-center" disabled={!selectedSuspect || !selectedRoom} type="submit"><div class="w-full">Voter</div></button>
 </form>
 

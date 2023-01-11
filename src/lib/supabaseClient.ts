@@ -28,6 +28,7 @@ export async function getRooms() {
 	if (error) console.log(error);
 	return data;
 }
+
 export async function deleteRoom(id: number) {
 	const { error } = await supabase.from('rooms').delete().eq('id', id);
 	if (error) console.log(error);
@@ -41,4 +42,16 @@ export async function createRoom(name: string) {
 export async function voteForRoom(id: number) {
 	const { error } = await supabase.rpc('vote_room', { row_id: id });
 	if (error) console.log(error);
+}
+
+export async function resetVotesForSuspects() {
+	const { data, error } = await supabase.from('suspects').update({ votes: 0 }).neq('votes', 0);
+	if (error) console.log(error);
+	return data;
+}
+
+export async function resetVotesForRooms() {
+	const { data, error } = await supabase.from('rooms').update({ votes: 0 }).neq('votes', 0);
+	if (error) console.log(error);
+	return data;
 }
