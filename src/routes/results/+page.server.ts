@@ -1,11 +1,16 @@
-import { getRooms, getSuspects, voteForRoom, voteForSuspect } from '$lib/supabaseClient';
+import { getRooms, getStatus, getSuspects, voteForRoom, voteForSuspect } from '$lib/supabaseClient';
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load = (async () => {
+	const status = await getStatus();
+	if (status === 0) {
+		throw redirect(303, '/');
+	}
 	const suspects = await getSuspects();
 	const rooms = await getRooms();
-	return { suspects: suspects, rooms: rooms };
+	const nbVotes = suspects?.map((e) => e.votes).reduce((previous, current) => previous + current);
+	return { status: status, suspects: suspects, rooms: rooms, nbVotes: nbVotes };
 }) satisfies PageServerLoad;
 
 /** @type {import('./$types').Actions} */

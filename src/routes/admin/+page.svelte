@@ -2,9 +2,27 @@
 	import HomeLink from '$lib/HomeLink.svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
+
+	const statuses = ['Off', 'Voting', 'Done'];
+	let selectedStatus = data.status;
 </script>
 
 <HomeLink />
+<h3 class="mb-4 font-semibold text-gray-900 dark:text-white">Identification</h3>
+<ul
+	class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white mb-4"
+>
+	{#each statuses as status, i}
+		<li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+			<div class="flex items-center pl-3">
+				<form id="statusForm" method="POST" action="?/updateStatus">
+					<input name="status" type="hidden" value="{i}" />
+					<button class="{i===selectedStatus ? 'on' : 'off'}">{status}</button>
+				</form>
+			</div>
+		</li>
+	{/each}
+</ul>
 
 <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
 	<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -101,6 +119,12 @@
 		@apply px-5;
 		@apply py-2.5;
 		@apply text-center;
+	}
+	button.on {
+		@apply bg-green-700;
+	}
+	button.off {
+		@apply bg-gray-700;
 	}
 	input {
 		@apply bg-gray-50;

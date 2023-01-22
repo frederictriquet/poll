@@ -3,6 +3,21 @@ import { env } from '$env/dynamic/private';
 
 export const supabase = createClient(env['SUPABASE_URL'], env['SUPABASE_ANON_KEY']);
 
+export async function getStatus() {
+	const { data, error } = await supabase.from('meta').select(`value_int`).eq('key', 'status');
+	if (error) console.log(error);
+	if (!data) return 0;
+	return data[0].value_int;
+}
+export async function updateStatus(newStatus: number) {
+	const { data, error } = await supabase
+		.from('meta')
+		.update({ value_int: newStatus })
+		.eq('key', 'status');
+	if (error) console.log(error);
+	return data;
+}
+
 export async function getSuspects() {
 	const { data, error } = await supabase.from('suspects').select(`id, name, votes`).order('name');
 	if (error) console.log(error);
