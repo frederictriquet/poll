@@ -39,10 +39,6 @@ export const actions = {
 		await createSuspect(name);
 		return { success: true };
 	},
-	restVotesForSuspects: async () => {
-		await resetVotesForSuspects();
-		return { success: true };
-	},
 	deleteRoom: async ({ request }) => {
 		const data = await request.formData();
 		const id = data.get('id');
@@ -55,7 +51,8 @@ export const actions = {
 		await createRoom(name);
 		return { success: true };
 	},
-	restVotesForRooms: async () => {
+	resetVotes: async () => {
+		await resetVotesForSuspects();
 		await resetVotesForRooms();
 		return { success: true };
 	}

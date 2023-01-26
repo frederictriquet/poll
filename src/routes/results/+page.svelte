@@ -10,7 +10,7 @@
 {#if data.status === 1}
 	<div>
 		<h1 class="text-center">Le vote n'est pas fini</h1>
-		<h2 class="text-center">Déjà {data.nbVotes} votes</h2>
+		<h2 class="text-center">Déjà {data.nbVotes} vote{data.nbVotes>1 ? 's' : ''}</h2>
 		<a data-sveltekit-reload href="/results"
 			><button class="nicebutton">Rafraîchir la page</button></a
 		>
