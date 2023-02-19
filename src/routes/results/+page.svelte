@@ -18,9 +18,6 @@
 {:else if data.status === 2}
 	<h1 class="text-center">Votes pour l'assassin</h1>
 	<Graph {width} {height} points={data.suspects} />
-
-	<h1 class="text-center mt-5">Votes pour le lieu</h1>
-	<Graph {width} {height} points={data.rooms} />
 {/if}
 
 <style>

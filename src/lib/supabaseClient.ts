@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/auth-helpers-sveltekit';
-import { env } from '$env/dynamic/private';
+import { env } from '$env/dynamic/public';
 
-export const supabase = createClient(env['SUPABASE_URL'], env['SUPABASE_ANON_KEY']);
+export const supabase = createClient(env.PUBLIC_SUPABASE_URL, env.PUBLIC_SUPABASE_ANON_KEY);
 
 export async function getStatus() {
 	const { data, error } = await supabase.from('meta').select(`value_int`).eq('key', 'status');
@@ -19,7 +19,27 @@ export async function updateStatus(newStatus: number) {
 }
 
 export async function getSuspects() {
-	const { data, error } = await supabase.from('suspects').select(`id, name, votes`).order('name');
+	const { data, error } = await supabase
+		.from('suspects')
+		.select(`id, name, votes, picture_data`)
+		.order('name');
+	if (error) console.log(error);
+	return data;
+}
+export async function getSuspect(id: number) {
+	const { data, error } = await supabase
+		.from('suspects')
+		.select(`id, name, votes, picture_data`)
+		.eq('id', id)
+		.maybeSingle();
+	if (error) console.log(error);
+	return data;
+}
+export async function updateSuspectPicture(id: number, pictureData: string) {
+	const { data, error } = await supabase
+		.from('suspects')
+		.update({ picture_data: pictureData })
+		.eq('id', id);
 	if (error) console.log(error);
 	return data;
 }
@@ -38,35 +58,8 @@ export async function voteForSuspect(id: number) {
 	if (error) console.log(error);
 }
 
-export async function getRooms() {
-	const { data, error } = await supabase.from('rooms').select(`id, name, votes`).order('name');
-	if (error) console.log(error);
-	return data;
-}
-
-export async function deleteRoom(id: number) {
-	const { error } = await supabase.from('rooms').delete().eq('id', id);
-	if (error) console.log(error);
-}
-
-export async function createRoom(name: string) {
-	const { error } = await supabase.from('rooms').insert({ name: name, votes: 0 });
-	if (error) console.log(error);
-}
-
-export async function voteForRoom(id: number) {
-	const { error } = await supabase.rpc('vote_room', { row_id: id });
-	if (error) console.log(error);
-}
-
 export async function resetVotesForSuspects() {
 	const { data, error } = await supabase.from('suspects').update({ votes: 0 }).neq('votes', 0);
-	if (error) console.log(error);
-	return data;
-}
-
-export async function resetVotesForRooms() {
-	const { data, error } = await supabase.from('rooms').update({ votes: 0 }).neq('votes', 0);
 	if (error) console.log(error);
 	return data;
 }

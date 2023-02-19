@@ -1,4 +1,4 @@
-import { getRooms, getStatus, getSuspects, voteForRoom, voteForSuspect } from '$lib/supabaseClient';
+import { getStatus, getSuspects, voteForSuspect } from '$lib/supabaseClient';
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
@@ -17,8 +17,7 @@ export const load = (async (event) => {
 		throw redirect(303, '/results');
 	}
 	const suspects = await getSuspects();
-	const rooms = await getRooms();
-	return { status: status, suspects: suspects, rooms: rooms };
+	return { status: status, suspects: suspects };
 }) satisfies PageServerLoad;
 
 /** @type {import('./$types').Actions} */
@@ -28,9 +27,7 @@ export const actions = {
 		if (status === 1) {
 			const data = await request.formData();
 			const suspectId = data.get('selectedSuspect');
-			const roomId = data.get('selectedRoom');
 			await voteForSuspect(suspectId);
-			await voteForRoom(roomId);
 		}
 		cookies.set('has-voted', true, {
 			path: '/',
