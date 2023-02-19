@@ -1,5 +1,4 @@
 <script lang="ts">
-	import HomeLink from '$lib/HomeLink.svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
 
@@ -7,7 +6,6 @@
 	let selectedStatus = data.status;
 </script>
 
-<HomeLink />
 <form method="POST" action="?/resetVotes">
 	<button>Reset Votes</button>
 </form>
@@ -33,6 +31,7 @@
 				<th class="py-3 px-6">Nom</th>
 				<th>Votes</th>
 				<th />
+				<th />
 			</tr>
 			{#each data.suspects as suspect}
 				<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
@@ -40,6 +39,7 @@
 						>{suspect.name}</td
 					>
 					<td>{suspect.votes}</td>
+					<td><a href="/admin/{suspect.id}"><img src={suspect.picture_data ?? '/avatar.jpg'}></a></td>
 					<td
 						><form method="POST" action="?/deleteSuspect">
 							<input type="hidden" name="id" value={suspect.id} /><button

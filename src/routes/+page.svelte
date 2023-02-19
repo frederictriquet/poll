@@ -9,7 +9,7 @@
 {:else}
 	<h1 class="text-center">Qui est l'assassin ?</h1>
 
-	<ul class="grid gap-6 w-full md:grid-cols-2">
+	<ul class="grid gap-6 w-full md:grid-cols-3">
 		{#each data.suspects as suspect}
 			<li>
 				<input
@@ -21,7 +21,8 @@
 				/>
 				<label for="suspect{suspect.id}" class="nicebutton w-full">
 					<div class="w-full text-lg font-semibold text-center">
-						{suspect.name}
+						<!-- {suspect.name} -->
+						<img src={suspect.picture_data} alt={suspect.name} />
 					</div>
 				</label>
 			</li>
