@@ -19,7 +19,27 @@ export async function updateStatus(newStatus: number) {
 }
 
 export async function getSuspects() {
-	const { data, error } = await supabase.from('suspects').select(`id, name, votes`).order('name');
+	const { data, error } = await supabase
+		.from('suspects')
+		.select(`id, name, votes, picture_data`)
+		.order('name');
+	if (error) console.log(error);
+	return data;
+}
+export async function getSuspect(id: number) {
+	const { data, error } = await supabase
+		.from('suspects')
+		.select(`id, name, votes, picture_data`)
+		.eq('id', id)
+		.maybeSingle();
+	if (error) console.log(error);
+	return data;
+}
+export async function updateSuspectPicture(id: number, pictureData: string) {
+	const { data, error } = await supabase
+		.from('suspects')
+		.update({ picture_data: pictureData })
+		.eq('id', id);
 	if (error) console.log(error);
 	return data;
 }
@@ -43,4 +63,3 @@ export async function resetVotesForSuspects() {
 	if (error) console.log(error);
 	return data;
 }
-
