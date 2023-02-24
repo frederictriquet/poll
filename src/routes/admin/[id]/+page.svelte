@@ -16,10 +16,29 @@
 
 	let pictureData: string;
 
+	let videoWidth = 0;
+	let videoHeight = 0;
+
 	onMount(() => {
+		const constraints = {
+			video: {
+				width: {
+					min: 300,
+					ideal: 300,
+					max: 1000
+				},
+				height: {
+					min: 300,
+					ideal: 300,
+					max: 1000
+				}
+			},
+			audio: false
+		};
 		clearphoto();
 		navigator.mediaDevices
-			.getUserMedia({ video: true, audio: false })
+			.getUserMedia(constraints)
+			// .getUserMedia({ video: true, audio: false })
 			.then((stream) => {
 				video.srcObject = stream;
 				video.play();
@@ -32,7 +51,8 @@
 			(ev) => {
 				if (!streaming) {
 					// height = (video.videoHeight / video.videoWidth) * width;
-
+					videoWidth = video?.videoWidth;
+					videoHeight = video?.videoHeight;
 					video.setAttribute('width', width);
 					video.setAttribute('height', height);
 					// canvas.setAttribute('width', width);
@@ -68,12 +88,14 @@
 		pictureData = canvas.toDataURL('image/jpeg');
 		photo.setAttribute('src', pictureData);
 	}
-
 </script>
 
 <div>
 	<!-- {JSON.stringify(data)} -->
-  <img src={data.suspect.picture_data} alt="" />
+	<img src={data.suspect.picture_data} alt="" />
+</div>
+<div>
+	{videoWidth} x {videoHeight}
 </div>
 
 <div class="camera">
