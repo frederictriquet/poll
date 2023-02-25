@@ -23,7 +23,6 @@
 	let canvasWidth = 240;
 	let canvasHeight = 240;
 
-
 	const getCameraSelection = async () => {
 		const devices = await navigator.mediaDevices.enumerateDevices();
 		const videoDevices = devices.filter((device) => device.kind === 'videoinput');
@@ -73,6 +72,8 @@
 
 					canvas.setAttribute('width', canvasWidth);
 					canvas.setAttribute('height', canvasHeight);
+					// canvas.translate(canvasWidth, 0);
+					// canvas.scale(-1, 1);
 					streaming = true;
 				}
 			},
@@ -127,7 +128,7 @@
 	<img src={data.suspect.picture_data} alt="" />
 </div>
 <div>
-	{videoWidth} x {videoHeight}<br>
+	{videoWidth} x {videoHeight}<br />
 	{action}
 </div>
 
@@ -154,8 +155,9 @@
 		box-shadow: 2px 2px 3px black;
 		width: 320px;
 		height: 240px;
+		-webkit-transform: scaleX(-1);
+		transform: scaleX(-1);
 	}
-
 	#photo {
 		border: 1px solid black;
 		box-shadow: 2px 2px 3px black;
