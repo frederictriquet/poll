@@ -20,6 +20,9 @@
 
 	let videoWidth = 0;
 	let videoHeight = 0;
+	let canvasWidth = 240;
+	let canvasHeight = 240;
+
 
 	const getCameraSelection = async () => {
 		const devices = await navigator.mediaDevices.enumerateDevices();
@@ -30,6 +33,7 @@
 		cameraOptions.innerHTML = options.join('');
 	};
 
+	let action = 'none';
 	onMount(() => {
 		const constraints = {
 			video: {
@@ -66,9 +70,9 @@
 					videoHeight = video?.videoHeight;
 					video.setAttribute('width', width);
 					video.setAttribute('height', height);
-					// canvas.setAttribute('width', width);
-					canvas.setAttribute('width', height);
-					canvas.setAttribute('height', height);
+
+					canvas.setAttribute('width', canvasWidth);
+					canvas.setAttribute('height', canvasHeight);
 					streaming = true;
 				}
 			},
@@ -78,16 +82,29 @@
 
 	function takepicture() {
 		const context = canvas.getContext('2d');
-		if (width && height) {
-			// canvas.width = width;
-			// canvas.height = height;
-			if (width > height) {
-				const offsetX = (width - height) / 2;
-				context.drawImage(video, 0 - offsetX, 0, width, height);
+		if (videoWidth && videoHeight) {
+			let sx, sy, sw, sh, dx, dy, dw, dh;
+			if (videoWidth > videoHeight) {
+				sx = (videoWidth - videoHeight) / 2;
+				sy = 0;
+				sw = videoHeight;
+				sh = videoHeight;
+				dx = 0;
+				dy = 0;
+				dw = canvasWidth;
+				dh = canvasHeight;
 			} else {
-				const offsetY = (height - width) / 2;
-				context.drawImage(video, 0, 0 - offsetY, width, height);
+				sx = (videoWidth - videoHeight) / 2;
+				sy = 0;
+				sw = videoHeight;
+				sh = videoHeight;
+				dx = 0;
+				dy = 0;
+				dw = canvasWidth;
+				dh = canvasHeight;
 			}
+			action = `context.drawImage(video, ${sx}, ${sy}, ${sw}, ${sh}, ${dx}, ${dy}, ${dw}, ${dh});`;
+			context.drawImage(video, sx, sy, sw, sh, dx, dy, dw, dh);
 			pictureData = canvas.toDataURL('image/jpeg');
 			// console.log(pictureData);
 			photo.setAttribute('src', pictureData);
@@ -110,7 +127,8 @@
 	<img src={data.suspect.picture_data} alt="" />
 </div>
 <div>
-	{videoWidth} x {videoHeight}
+	{videoWidth} x {videoHeight}<br>
+	{action}
 </div>
 
 <div class="camera">
@@ -119,6 +137,7 @@
 </div>
 
 <canvas id="canvas" bind:this={canvas} />
+
 <div class="output">
 	<img id="photo" bind:this={photo} alt="The screen capture will appear in this box." />
 	<form method="POST" action="?/uploadPicture">
@@ -155,8 +174,10 @@
 
 	.output {
 		width: 240px;
+		height: 240px;
 		display: inline-block;
 		vertical-align: top;
+		border: 5px solid red;
 	}
 
 	.startbutton {
