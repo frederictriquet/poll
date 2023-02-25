@@ -94,10 +94,10 @@
 				dw = canvasWidth;
 				dh = canvasHeight;
 			} else {
-				sx = (videoWidth - videoHeight) / 2;
-				sy = 0;
-				sw = videoHeight;
-				sh = videoHeight;
+				sx = 0;
+				sy = (videoHeight - videoWidth) / 2;
+				sw = videoWidth;
+				sh = videoWidth;
 				dx = 0;
 				dy = 0;
 				dw = canvasWidth;
