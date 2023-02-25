@@ -7,6 +7,8 @@
 	const width = 320; // We will scale the photo width to this
 	let height = 240; // This will be computed based on the input stream
 
+	// phone 320x480
+	// mac 640x480
 	let streaming = false;
 
 	let video: Element;
@@ -18,6 +20,15 @@
 
 	let videoWidth = 0;
 	let videoHeight = 0;
+
+	const getCameraSelection = async () => {
+		const devices = await navigator.mediaDevices.enumerateDevices();
+		const videoDevices = devices.filter((device) => device.kind === 'videoinput');
+		const options = videoDevices.map((videoDevice) => {
+			return `<option value="${videoDevice.deviceId}">${videoDevice.label}</option>`;
+		});
+		cameraOptions.innerHTML = options.join('');
+	};
 
 	onMount(() => {
 		const constraints = {
@@ -70,9 +81,13 @@
 		if (width && height) {
 			// canvas.width = width;
 			// canvas.height = height;
-			const offsetX = (width - height) / 2;
-			// context.drawImage(video, 0, 0, width, height);
-			context.drawImage(video, 0 - offsetX, 0, width, height);
+			if (width > height) {
+				const offsetX = (width - height) / 2;
+				context.drawImage(video, 0 - offsetX, 0, width, height);
+			} else {
+				const offsetY = (height - width) / 2;
+				context.drawImage(video, 0, 0 - offsetY, width, height);
+			}
 			pictureData = canvas.toDataURL('image/jpeg');
 			// console.log(pictureData);
 			photo.setAttribute('src', pictureData);
