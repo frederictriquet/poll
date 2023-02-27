@@ -40,9 +40,15 @@
 		audio: false
 	};
 
-	const initVideo = (constraints) => {
+	const initVideo = () => {
+		const updatedConstraints = {
+			...constraints,
+			deviceId: {
+				exact: cameras[selectedCamera].id
+			}
+		};
 		navigator.mediaDevices
-			.getUserMedia(constraints)
+			.getUserMedia(updatedConstraints)
 			// .getUserMedia({ video: true, audio: false })
 			.then((stream) => {
 				video.srcObject = stream;
@@ -69,14 +75,8 @@
 	let cameras = '';
 	onMount(async () => {
 		cameras = await getCameraSelection();
-		const updatedConstraints = {
-			...constraints,
-			deviceId: {
-				exact: cameras[selectedCamera].id
-			}
-		};
 		clearphoto();
-		initVideo(updatedConstraints);
+		initVideo();
 		video.addEventListener(
 			'canplay',
 			(ev) => {
@@ -140,6 +140,7 @@
 	}
 	function switchCam() {
 		selectedCamera = (selectedCamera + 1) % cameras.length;
+		initVideo();
 	}
 </script>
 
