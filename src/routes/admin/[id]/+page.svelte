@@ -23,22 +23,25 @@
 	let canvasWidth = 240;
 	let canvasHeight = 240;
 
+	let selectedCamera = 0;
+
 	const getCameraSelection = async () => {
 		let res = '';
 		const devices = await navigator.mediaDevices.enumerateDevices();
 		const videoDevices = devices.filter((device) => device.kind === 'videoinput');
-		const options = videoDevices.map((videoDevice) => {
+		let cam = 0;
+		const cameras = videoDevices.map((videoDevice) => {
 			console.log(videoDevice);
-			return `${JSON.stringify(videoDevice)}<br>`;
-			// return `<option value="${videoDevice.deviceId}">${videoDevice.label}</option>`;
+			cam++;
+			return {'label': videoDevice.label ?? 'cam_'+cam, id: videoDevice.deviceId};
 		});
-		// cameraOptions.innerHTML = options.join('');
-		return options.join('');
+		return cameras;
 	};
 
 	let action = 'none';
 	let cameras = '';
 	onMount(async () => {
+		cameras = await getCameraSelection();
 		const constraints = {
 			video: {
 				width: {
@@ -50,11 +53,13 @@
 					min: 300,
 					ideal: 300,
 					max: 1000
+				},
+				deviceId: {
+					exact: cameras[selectedCamera].id
 				}
 			},
 			audio: false
 		};
-		cameras = await getCameraSelection();
 		clearphoto();
 		navigator.mediaDevices
 			.getUserMedia(constraints)
@@ -127,16 +132,21 @@
 		pictureData = canvas.toDataURL('image/jpeg');
 		photo.setAttribute('src', pictureData);
 	}
+	function switchCam() {
+		selectedCamera = (selectedCamera+1)%cameras.length;
+
+	}
 </script>
 
 <div>
+	<button on:click={switchCam}>cam</button>
 	<!-- {JSON.stringify(data)} -->
 	<img src={data.suspect.picture_data} alt="" />
 </div>
 <div>
 	{videoWidth} x {videoHeight}<br />
 	{action}
-	{cameras}
+	{JSON.stringify(cameras)}
 </div>
 
 <div class="camera">
