@@ -29,7 +29,7 @@
 		const videoDevices = devices.filter((device) => device.kind === 'videoinput');
 		const options = videoDevices.map((videoDevice) => {
 			console.log(videoDevice);
-			return `${videoDevice.deviceId} -> ${videoDevice.label}<br>`;
+			return `${JSON.stringify(videoDevice)}<br>`;
 			// return `<option value="${videoDevice.deviceId}">${videoDevice.label}</option>`;
 		});
 		// cameraOptions.innerHTML = options.join('');
