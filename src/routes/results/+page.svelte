@@ -16,7 +16,7 @@
 		>
 	</div>
 {:else if data.status === 2}
-	<h1 class="text-center">Votes pour l'assassin</h1>
+	<h1 class="text-center">La personne désignée par le public comme étant l'assassin est</h1>
 	<Graph {width} {height} points={data.suspects} />
 {/if}
 

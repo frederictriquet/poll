@@ -24,16 +24,21 @@
 	let canvasHeight = 240;
 
 	const getCameraSelection = async () => {
+		let res = '';
 		const devices = await navigator.mediaDevices.enumerateDevices();
 		const videoDevices = devices.filter((device) => device.kind === 'videoinput');
 		const options = videoDevices.map((videoDevice) => {
-			return `<option value="${videoDevice.deviceId}">${videoDevice.label}</option>`;
+			console.log(videoDevice);
+			return `${videoDevice.deviceId} -> ${videoDevice.label}<br>`;
+			// return `<option value="${videoDevice.deviceId}">${videoDevice.label}</option>`;
 		});
-		cameraOptions.innerHTML = options.join('');
+		// cameraOptions.innerHTML = options.join('');
+		return options.join('');
 	};
 
 	let action = 'none';
-	onMount(() => {
+	let cameras = '';
+	onMount(async () => {
 		const constraints = {
 			video: {
 				width: {
@@ -49,6 +54,7 @@
 			},
 			audio: false
 		};
+		cameras = await getCameraSelection();
 		clearphoto();
 		navigator.mediaDevices
 			.getUserMedia(constraints)
@@ -130,6 +136,7 @@
 <div>
 	{videoWidth} x {videoHeight}<br />
 	{action}
+	{cameras}
 </div>
 
 <div class="camera">
