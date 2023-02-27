@@ -24,43 +24,23 @@
 	let canvasHeight = 240;
 
 	let selectedCamera = 0;
-
-	const getCameraSelection = async () => {
-		let res = '';
-		const devices = await navigator.mediaDevices.enumerateDevices();
-		const videoDevices = devices.filter((device) => device.kind === 'videoinput');
-		let cam = 0;
-		const cameras = videoDevices.map((videoDevice) => {
-			console.log(videoDevice);
-			cam++;
-			return {'label': videoDevice.label ?? 'cam_'+cam, id: videoDevice.deviceId};
-		});
-		return cameras;
+	const constraints = {
+		video: {
+			width: {
+				min: 300,
+				ideal: 300,
+				max: 1000
+			},
+			height: {
+				min: 300,
+				ideal: 300,
+				max: 1000
+			}
+		},
+		audio: false
 	};
 
-	let action = 'none';
-	let cameras = '';
-	onMount(async () => {
-		cameras = await getCameraSelection();
-		const constraints = {
-			video: {
-				width: {
-					min: 300,
-					ideal: 300,
-					max: 1000
-				},
-				height: {
-					min: 300,
-					ideal: 300,
-					max: 1000
-				},
-				deviceId: {
-					exact: cameras[selectedCamera].id
-				}
-			},
-			audio: false
-		};
-		clearphoto();
+	const initVideo = (constraints) => {
 		navigator.mediaDevices
 			.getUserMedia(constraints)
 			// .getUserMedia({ video: true, audio: false })
@@ -71,6 +51,32 @@
 			.catch((err) => {
 				console.error(`An error occurred: ${err}`);
 			});
+	};
+	const getCameraSelection = async () => {
+		let res = '';
+		const devices = await navigator.mediaDevices.enumerateDevices();
+		const videoDevices = devices.filter((device) => device.kind === 'videoinput');
+		let cam = 0;
+		const cameras = videoDevices.map((videoDevice) => {
+			console.log(videoDevice);
+			cam++;
+			return { label: videoDevice.label ?? 'cam_' + cam, id: videoDevice.deviceId };
+		});
+		return cameras;
+	};
+
+	let action = 'none';
+	let cameras = '';
+	onMount(async () => {
+		cameras = await getCameraSelection();
+		const updatedConstraints = {
+			...constraints,
+			deviceId: {
+				exact: cameras[selectedCamera].id
+			}
+		};
+		clearphoto();
+		initVideo(updatedConstraints);
 		video.addEventListener(
 			'canplay',
 			(ev) => {
@@ -133,8 +139,7 @@
 		photo.setAttribute('src', pictureData);
 	}
 	function switchCam() {
-		selectedCamera = (selectedCamera+1)%cameras.length;
-
+		selectedCamera = (selectedCamera + 1) % cameras.length;
 	}
 </script>
 
@@ -145,7 +150,7 @@
 </div>
 <div>
 	{videoWidth} x {videoHeight}<br />
-	{action}
+	{selectedCamera}
 	{JSON.stringify(cameras)}
 </div>
 
