@@ -24,6 +24,7 @@
 	let canvasHeight = 240;
 
 	let selectedCamera = 0;
+	let c;
 	const constraints = {
 		video: {
 			width: {
@@ -47,6 +48,7 @@
 				exact: cameras[selectedCamera].id
 			}
 		};
+		c = updatedConstraints;
 		navigator.mediaDevices
 			.getUserMedia(updatedConstraints)
 			// .getUserMedia({ video: true, audio: false })
@@ -153,6 +155,7 @@
 	{videoWidth} x {videoHeight}<br />
 	{selectedCamera}
 	{JSON.stringify(cameras)}
+	{JSON.stringify(c)}
 </div>
 
 <div class="camera">
