@@ -23,7 +23,7 @@
 	let canvasWidth = 240;
 	let canvasHeight = 240;
 
-	let selectedCamera = 0;
+	let selectedCamera = 1;
 	let c;
 	const constraints = {
 		video: {
