@@ -23,7 +23,7 @@
 	let canvasWidth = 240;
 	let canvasHeight = 240;
 
-	let selectedCamera = 1;
+	let selectedCamera = 0;
 	let c;
 	const constraints = {
 		video: {
@@ -175,7 +175,7 @@
 
 <img src={data.pictureData} />
 
-<style>
+<style type="postcss">
 	#video {
 		border: 1px solid black;
 		box-shadow: 2px 2px 3px black;

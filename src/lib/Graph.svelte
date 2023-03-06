@@ -31,7 +31,7 @@
 
 <div class="chart" bind:clientWidth={width} bind:clientHeight={height} bind:this={chartEl} />
 
-<style>
+<style type="postcss">
 	.chart {
 		width: 100%;
 		max-width: 500px;
