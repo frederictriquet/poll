@@ -3,6 +3,7 @@
 	export let data: PageData;
 
 	import Graph from '$lib/Graph.svelte';
+	import Podium from '$lib/Podium.svelte';
 	let width = 500;
 	let height = 200;
 </script>
@@ -16,11 +17,12 @@
 		>
 	</div>
 {:else if data.status === 2}
-	<h1 class="text-center">Votes pour l'assassin</h1>
+	<h1 class="text-center">La personne désignée par le public comme étant l'assassin est</h1>
+	<Podium data={data.suspects?.sort((a,b) => b.votes - a.votes)[0]} />
 	<Graph {width} {height} points={data.suspects} />
 {/if}
 
-<style>
+<style type="postcss">
 	div {
 		@apply text-center;
 	}
