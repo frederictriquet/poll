@@ -5,6 +5,8 @@
 </script>
 
 {#if data.status == 0}
+	<h1 class="text-center">Merci de vous être connecté sur cette page</h1>
+	<h1 class="text-center">Conservez-la ouverte</h1>
 	<h1 class="text-center">Vous pourrez voter plus tard</h1>
 {:else}
 	<h1 class="text-center">Qui est l'assassin ?</h1>
