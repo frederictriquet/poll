@@ -1,7 +1,26 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { redirect } from '@sveltejs/kit';
+	import { onDestroy, onMount } from 'svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
 	let selectedSuspect;
+	let apiInterval;
+	onMount(() => {
+		apiInterval = setInterval(async () => {
+			let statusResponse = await fetch('/api/status.json');
+			const body = await statusResponse.json();
+			// console.log(body.status, data.status);
+			if (body.status != data.status) {
+				// console.log('redirect');
+				window.location.replace('/');
+			}
+		}, 10000);
+	});
+
+	onDestroy(() => {
+    clearInterval(apiInterval);
+});
 </script>
 
 {#if data.status == 0}
@@ -35,10 +54,8 @@
 
 	<form method="POST" action="?/vote">
 		<input type="hidden" name="selectedSuspect" value={selectedSuspect} />
-		<button
-			class="nicebutton w-full text-center"
-			disabled={!selectedSuspect}
-			type="submit"><div class="w-full">Voter</div></button
+		<button class="nicebutton w-full text-center" disabled={!selectedSuspect} type="submit"
+			><div class="w-full">Voter</div></button
 		>
 	</form>
 {/if}

@@ -4,8 +4,26 @@
 
 	import Graph from '$lib/Graph.svelte';
 	import Podium from '$lib/Podium.svelte';
+	import { onDestroy, onMount } from 'svelte';
 	let width = 500;
 	let height = 200;
+
+	let apiInterval;
+	onMount(() => {
+		apiInterval = setInterval(async () => {
+			let statusResponse = await fetch('/api/status.json');
+			const body = await statusResponse.json();
+			// console.log(body.status, data.status);
+			if (body.status != data.status) {
+				// console.log('redirect');
+				window.location.replace('/results');
+			}
+		}, 10000);
+	});
+
+	onDestroy(() => {
+    clearInterval(apiInterval);
+});
 </script>
 
 {#if data.status === 1}
