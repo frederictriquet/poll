@@ -27,7 +27,7 @@
 	<h1 class="text-center">Merci de vous être connecté sur cette page.</h1>
 	<h1 class="text-center">Conservez-la ouverte.</h1>
 	<h1 class="text-center">Vous l'utiliserez plus tard pour voter.</h1>
-	<img src="impropulsion.jpg" />
+	<img alt="Impropulsion" width="300px" src="impropulsion.jpg" />
 {:else}
 	<h1 class="text-center">Qui est l'assassin ?</h1>
 
