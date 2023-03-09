@@ -2,11 +2,5 @@
   export let data;
 </script>
 <div>
-  <img src={data.picture_data} alt="">
+  <img class="mx-auto" src={data.picture_data} alt="">
 </div>
-
-<style type="postcss">
-  img {
-    @apply mx-auto;
-	}
-</style>
