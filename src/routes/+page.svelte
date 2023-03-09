@@ -6,7 +6,8 @@
 	let apiInterval;
 
 	$: name = data.suspects?.filter((s) => s.id == selectedSuspect)[0]?.name;
-	$: voteButtonLabel = (selectedSuspect == -1) ? 'Choisir un personnage' : `Je vote pour ${name}`;
+	$: voteButtonLabel =
+		selectedSuspect == -1 ? "Vous devez d'abord choisir un suspect." : `Je vote pour ${name}.`;
 
 	onMount(() => {
 		apiInterval = setInterval(async () => {
@@ -21,8 +22,8 @@
 	});
 
 	onDestroy(() => {
-    clearInterval(apiInterval);
-});
+		clearInterval(apiInterval);
+	});
 </script>
 
 {#if data.status == 0}
@@ -32,7 +33,9 @@
 	<img alt="Impropulsion" class="mx-auto w-96" src="impropulsion.jpg" />
 {:else}
 	<h1 class="text-center">Qui est l'assassin ?</h1>
-	<h4 class="text-center">Choisissez votre coupable en cliquant sur sa photo et votez en bas de la page</h4>
+	<h4 class="text-center">
+		Désignez votre coupable en cliquant sur sa photo et votez en bas de la page.
+	</h4>
 
 	<ul class="grid gap-6 w-full md:grid-cols-3">
 		{#each data.suspects as suspect}
@@ -57,28 +60,27 @@
 
 	<form method="POST" action="?/vote">
 		<input type="hidden" name="selectedSuspect" value={selectedSuspect} />
-		<button class="nicebutton w-full text-center" disabled={selectedSuspect==-1} type="submit"
+		<button class="nicebutton w-full text-center" disabled={selectedSuspect == -1} type="submit"
 			><div class="w-full">{voteButtonLabel}</div></button
 		>
 	</form>
 {/if}
 
 <style lang="postcss">
-
-.picturebutton {
-  @apply inline-flex;
-  @apply justify-between;
-  @apply items-center;
-  @apply p-5;
-  @apply text-gray-500;
-  @apply bg-white;
-  @apply rounded-lg;
-  @apply border-4;
-  @apply border-gray-200;
-  @apply cursor-pointer;
-  @apply peer-checked:border-red-500;
-  @apply peer-checked:bg-zinc-900;
-  /* @apply hover:text-gray-600;
+	.picturebutton {
+		@apply inline-flex;
+		@apply justify-between;
+		@apply items-center;
+		@apply p-5;
+		@apply text-gray-500;
+		@apply bg-white;
+		@apply rounded-lg;
+		@apply border-4;
+		@apply border-gray-200;
+		@apply cursor-pointer;
+		@apply peer-checked:border-red-500;
+		@apply peer-checked:bg-zinc-900;
+		/* @apply hover:text-gray-600;
   @apply hover:bg-gray-100; */
-}
+	}
 </style>
