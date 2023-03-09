@@ -9,7 +9,12 @@ export const load = (async () => {
 	}
 	const suspects = await getSuspects();
 	const nbVotes = suspects?.map((e) => e.votes).reduce((previous, current) => previous + current);
-	return { status: status, suspects: suspects, nbVotes: nbVotes };
+
+	return {
+		status: status,
+		suspects: suspects,
+		nbVotes: nbVotes
+	};
 }) satisfies PageServerLoad;
 
 /** @type {import('./$types').Actions} */

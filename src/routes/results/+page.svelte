@@ -10,33 +10,26 @@
 
 	let apiInterval;
 	onMount(() => {
+		console.log(data)
 		apiInterval = setInterval(async () => {
-			let statusResponse = await fetch('/api/status.json');
-			const body = await statusResponse.json();
-			// console.log(body.status, data.status);
-			if (body.status != data.status) {
-				// console.log('redirect');
-				window.location.replace('/results');
-			}
-		}, 10000);
+			window.location.replace('/results');
+		}, 5000);
 	});
 
 	onDestroy(() => {
-    clearInterval(apiInterval);
-});
+		clearInterval(apiInterval);
+	});
 </script>
 
 {#if data.status === 1}
 	<div>
-		<h1 class="text-center">Le vote n'est pas fini</h1>
-		<h2 class="text-center">Déjà {data.nbVotes} vote{data.nbVotes>1 ? 's' : ''}</h2>
-		<a data-sveltekit-reload href="/results"
-			><button class="nicebutton">Rafraîchir la page</button></a
-		>
+		<h1 class="text-center">{data.text}</h1>
+		<h1 class="text-center">Déjà {data.nbVotes} vote{data.nbVotes > 1 ? 's' : ''}</h1>
+		<img alt="Impropulsion" class="mx-auto w-96" src="impropulsion.jpg" />
 	</div>
 {:else if data.status === 2}
 	<h1 class="text-center">La personne désignée par le public comme étant l'assassin est</h1>
-	<Podium data={data.suspects?.sort((a,b) => b.votes - a.votes)[0]} />
+	<Podium data={data.suspects?.sort((a, b) => b.votes - a.votes)[0]} />
 	<Graph {width} {height} points={data.suspects} />
 {/if}
 

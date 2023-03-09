@@ -1,11 +1,13 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { redirect } from '@sveltejs/kit';
 	import { onDestroy, onMount } from 'svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
-	let selectedSuspect;
+	let selectedSuspect = -1;
 	let apiInterval;
+
+	$: name = data.suspects?.filter((s) => s.id == selectedSuspect)[0]?.name;
+	$: voteButtonLabel = (selectedSuspect == -1) ? 'Choisir un personnage' : `Je vote pour ${name}`;
+
 	onMount(() => {
 		apiInterval = setInterval(async () => {
 			let statusResponse = await fetch('/api/status.json');
@@ -44,7 +46,7 @@
 				<label for="suspect{suspect.id}" class="nicebutton w-full">
 					<div class="w-full text-lg font-semibold text-center">
 						<!-- {suspect.name} -->
-						<img src={suspect.picture_data} alt={suspect.name} />
+						<img class="mx-auto" src={suspect.picture_data} alt={suspect.name} />
 					</div>
 				</label>
 			</li>
@@ -54,8 +56,8 @@
 
 	<form method="POST" action="?/vote">
 		<input type="hidden" name="selectedSuspect" value={selectedSuspect} />
-		<button class="nicebutton w-full text-center" disabled={!selectedSuspect} type="submit"
-			><div class="w-full">Voter</div></button
+		<button class="nicebutton w-full text-center" disabled={selectedSuspect==-1} type="submit"
+			><div class="w-full">{voteButtonLabel}</div></button
 		>
 	</form>
 {/if}
