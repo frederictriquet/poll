@@ -32,6 +32,7 @@
 	<img alt="Impropulsion" class="mx-auto w-96" src="impropulsion.jpg" />
 {:else}
 	<h1 class="text-center">Qui est l'assassin ?</h1>
+	<h4 class="text-center">Choisissez votre coupable en cliquant sur sa photo et votez en bas de la page</h4>
 
 	<ul class="grid gap-6 w-full md:grid-cols-3">
 		{#each data.suspects as suspect}
