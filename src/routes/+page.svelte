@@ -75,7 +75,7 @@
   @apply border-4;
   @apply border-gray-200;
   @apply cursor-pointer;
-  @apply peer-checked:border-blue-600;
+  @apply peer-checked:border-red-500;
   @apply peer-checked:bg-zinc-900;
   /* @apply hover:text-gray-600;
   @apply hover:bg-gray-100; */
