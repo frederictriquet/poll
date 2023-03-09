@@ -45,8 +45,8 @@
 				/>
 				<label for="suspect{suspect.id}" class="picturebutton w-full">
 					<div class="w-full text-lg font-semibold text-center">
-						<!-- {suspect.name} -->
 						<img class="mx-auto" src={suspect.picture_data} alt={suspect.name} />
+						{suspect.name}
 					</div>
 				</label>
 			</li>
