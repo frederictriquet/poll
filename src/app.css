@@ -21,9 +21,9 @@
   @apply peer-checked:text-blue-600;
   @apply hover:text-gray-600;
   @apply hover:bg-gray-100;
-  @apply dark:text-gray-400;
+  /* @apply dark:text-gray-400;
   @apply dark:bg-gray-800;
-  @apply dark:hover:bg-gray-700;
+  @apply dark:hover:bg-gray-700; */
 }
 
 .nicebutton:enabled {

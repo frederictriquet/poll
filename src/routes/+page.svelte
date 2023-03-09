@@ -43,7 +43,7 @@
 					bind:group={selectedSuspect}
 					value={suspect.id}
 				/>
-				<label for="suspect{suspect.id}" class="nicebutton w-full">
+				<label for="suspect{suspect.id}" class="picturebutton w-full">
 					<div class="w-full text-lg font-semibold text-center">
 						<!-- {suspect.name} -->
 						<img class="mx-auto" src={suspect.picture_data} alt={suspect.name} />
@@ -61,3 +61,23 @@
 		>
 	</form>
 {/if}
+
+<style lang="postcss">
+
+.picturebutton {
+  @apply inline-flex;
+  @apply justify-between;
+  @apply items-center;
+  @apply p-5;
+  @apply text-gray-500;
+  @apply bg-white;
+  @apply rounded-lg;
+  @apply border-4;
+  @apply border-gray-200;
+  @apply cursor-pointer;
+  @apply peer-checked:border-blue-600;
+  @apply peer-checked:bg-zinc-900;
+  /* @apply hover:text-gray-600;
+  @apply hover:bg-gray-100; */
+}
+</style>
