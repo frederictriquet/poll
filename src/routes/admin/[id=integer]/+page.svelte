@@ -147,20 +147,22 @@
 </script>
 
 <div>
-	<button on:click={switchCam}>cam</button>
+	<!-- <button on:click={switchCam}>cam</button> -->
 	<!-- {JSON.stringify(data)} -->
 	<img src={data.suspect.picture_data} alt="" />
 </div>
-<div>
+<!-- <div>
 	{videoWidth} x {videoHeight}<br />
 	{selectedCamera}
 	{JSON.stringify(cameras)}
 	{JSON.stringify(c)}
-</div>
+</div> -->
 
 <div class="camera">
 	<video id="video" bind:this={video}>Video stream not available.</video>
-	<button class="startbutton" on:click|preventDefault={takepicture}>Take photo</button>
+</div>
+<div>
+	<button class="bg-green-700 rounded-md text-white p-4" on:click|preventDefault={takepicture}>Take photo</button>
 </div>
 
 <canvas id="canvas" bind:this={canvas} />
@@ -169,7 +171,7 @@
 	<img id="photo" bind:this={photo} alt="The screen capture will appear in this box." />
 	<form method="POST" action="?/uploadPicture">
 		<input type="hidden" value={pictureData} name="pictureData" />
-		<button class="startbutton">Use this photo</button>
+		<button class="bg-green-700 rounded-md text-white p-4">Use this photo</button>
 	</form>
 </div>
 
@@ -207,7 +209,7 @@
 		vertical-align: top;
 		border: 5px solid red;
 	}
-
+/* 
 	.startbutton {
 		display: block;
 		position: relative;
@@ -220,5 +222,5 @@
 		font-size: 14px;
 		font-family: 'Lucida Grande', 'Arial', sans-serif;
 		color: rgba(255, 255, 255, 1);
-	}
+	} */
 </style>
