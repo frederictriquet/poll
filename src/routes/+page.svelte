@@ -33,9 +33,10 @@
 	<img alt="Impropulsion" class="mx-auto w-96" src="impropulsion.jpg" />
 {:else}
 	<h1 class="text-center">Qui est l'assassin ?</h1>
-	<h4 class="text-center">
-		Désignez votre coupable en cliquant sur sa photo et votez en bas de la page.
-	</h4>
+	<h1 class="text-center">
+		Désignez votre coupable en cliquant sur sa photo et confirmez en cliquant sur "Je vote pour
+		...".
+	</h1>
 
 	<ul class="grid gap-6 w-full md:grid-cols-3">
 		{#each data.suspects as suspect}
@@ -50,20 +51,23 @@
 				<label for="suspect{suspect.id}" class="picturebutton w-full">
 					<div class="w-full text-lg font-semibold text-center">
 						<img class="mx-auto" src={suspect.picture_data} alt={suspect.name} />
-						{suspect.name}
+						<!-- {suspect.name} -->
 					</div>
 				</label>
+				{#if selectedSuspect == suspect.id}
+					<form method="POST" action="?/vote">
+						<input type="hidden" name="selectedSuspect" value={selectedSuspect} />
+						<button
+							class="nicebutton w-full text-center"
+							disabled={selectedSuspect == -1}
+							type="submit"><div class="w-full">{voteButtonLabel}</div></button
+						>
+					</form>
+				{/if}
 			</li>
 		{/each}
 	</ul>
 	<div class="mt-10" />
-
-	<form method="POST" action="?/vote">
-		<input type="hidden" name="selectedSuspect" value={selectedSuspect} />
-		<button class="nicebutton w-full text-center" disabled={selectedSuspect == -1} type="submit"
-			><div class="w-full">{voteButtonLabel}</div></button
-		>
-	</form>
 {/if}
 
 <style lang="postcss">
