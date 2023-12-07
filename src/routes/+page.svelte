@@ -58,7 +58,7 @@
 					<form method="POST" action="?/vote">
 						<input type="hidden" name="selectedSuspect" value={selectedSuspect} />
 						<button
-							class="nicebutton w-full text-center"
+							class="w-full bg-green-700 rounded-md text-white p-4"
 							disabled={selectedSuspect == -1}
 							type="submit"><div class="w-full">{voteButtonLabel}</div></button
 						>
