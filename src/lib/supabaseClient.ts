@@ -35,6 +35,16 @@ export async function getSuspect(id: number) {
 	if (error) console.log(error);
 	return data;
 }
+
+
+export async function updateSuspectName(id: number, name: string) {
+	const { data, error } = await supabase
+		.from('suspects')
+		.update({ name: name })
+		.eq('id', id);
+	if (error) console.log(error);
+	return data;
+}
 export async function updateSuspectPicture(id: number, pictureData: string) {
 	const { data, error } = await supabase
 		.from('suspects')

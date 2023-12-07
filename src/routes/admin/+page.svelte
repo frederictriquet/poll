@@ -36,7 +36,12 @@
 			{#each data.suspects as suspect}
 				<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
 					<td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-						>{suspect.name}</td
+						><form method="POST" action="?/updateSuspectName">
+							<input type="hidden" name="id" value={suspect.id} />
+							<input type="text" name="name" value={suspect.name} />
+							<button>Update</button>
+						</form>
+						</td
 					>
 					<td>{suspect.votes}</td>
 					<td><a href="/admin/{suspect.id}"><img src={suspect.picture_data ?? '/avatar.jpg'}></a></td>

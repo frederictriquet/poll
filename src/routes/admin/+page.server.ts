@@ -4,7 +4,8 @@ import {
 	getStatus,
 	getSuspects,
 	resetVotesForSuspects,
-	updateStatus
+	updateStatus,
+	updateSuspectName
 } from '$lib/supabaseClient';
 import type { PageServerLoad } from './$types';
 
@@ -20,6 +21,13 @@ export const actions = {
 		const data = await request.formData();
 		const status = data.get('status');
 		await updateStatus(status);
+		return { success: true };
+	},
+	updateSuspectName: async ({ request }) => {
+		const data = await request.formData();
+		const id = data.get('id');
+		const name = data.get('name');
+		await updateSuspectName(id,name);
 		return { success: true };
 	},
 	deleteSuspect: async ({ request }) => {

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
+	import { enhance } from '$app/forms';
 
 	export let data: PageData;
 
@@ -12,7 +13,7 @@
 	let streaming = false;
 
 	let video: Element;
-	let canvas: Element;
+	let canvas: HTMLCanvasElement;
 	let photo: Element;
 	// let startbutton: Element;
 
@@ -144,25 +145,39 @@
 		selectedCamera = (selectedCamera + 1) % cameras.length;
 		initVideo();
 	}
+
+	function previewFile() {
+		const file = inputfile.files[0];
+		const reader = new FileReader();
+		reader.addEventListener(
+			'load',
+			() => {
+				// on convertit l'image en une chaîne de caractères base64
+				pictureData = reader.result;
+				photo.setAttribute('src', pictureData);
+
+			},
+			false
+		);
+		if (file) {
+			reader.readAsDataURL(file);
+		}
+	}
+	let imgpreviewdata;
+	let inputfile;
 </script>
 
 <div>
-	<!-- <button on:click={switchCam}>cam</button> -->
-	<!-- {JSON.stringify(data)} -->
-	<img src={data.suspect.picture_data} alt="" />
+	<input class="bg-green-700 rounded-md text-white p-4" type="file" on:change={previewFile} bind:this={inputfile} />
 </div>
-<!-- <div>
-	{videoWidth} x {videoHeight}<br />
-	{selectedCamera}
-	{JSON.stringify(cameras)}
-	{JSON.stringify(c)}
-</div> -->
 
 <div class="camera">
 	<video id="video" bind:this={video}>Video stream not available.</video>
 </div>
 <div>
-	<button class="bg-green-700 rounded-md text-white p-4" on:click|preventDefault={takepicture}>Take photo</button>
+	<button class="bg-green-700 rounded-md text-white p-4" on:click|preventDefault={takepicture}
+		>Take photo</button
+	>
 </div>
 
 <canvas id="canvas" bind:this={canvas} />
@@ -175,7 +190,8 @@
 	</form>
 </div>
 
-<img src={data.pictureData} />
+
+<!-- <img src={data.pictureData} /> -->
 
 <style type="postcss">
 	#video {
@@ -209,7 +225,7 @@
 		vertical-align: top;
 		border: 5px solid red;
 	}
-/* 
+	/* 
 	.startbutton {
 		display: block;
 		position: relative;
